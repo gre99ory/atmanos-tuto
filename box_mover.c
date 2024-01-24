@@ -47,6 +47,18 @@ void draw_callback(Canvas* canvas, void* ctx) {
     // furi_check(osMutexAcquire(box_mover->model_mutex, osWaitForever) == osOK);
     furi_check(furi_mutex_acquire(box_mover->model_mutex, FuriWaitForever) == FuriStatusOk);
 
+    FuriString* buffer;
+    buffer = furi_string_alloc();
+    canvas_set_font(canvas, FontPrimary);
+
+    furi_string_printf(buffer, "x=%d", box_mover->model->x);
+    canvas_draw_str_aligned(canvas, 30, 20, AlignLeft, AlignTop, furi_string_get_cstr(buffer));
+
+    furi_string_printf(buffer, "y=%d", box_mover->model->y);
+    canvas_draw_str_aligned(canvas, 30, 30, AlignLeft, AlignTop, furi_string_get_cstr(buffer));
+
+    furi_string_free(buffer);
+
     canvas_draw_box(
         canvas, box_mover->model->x, box_mover->model->y, 4, 4); // Draw a box on the screen
 
